@@ -1,0 +1,8 @@
+div.server-details
+{
+    display: none;
+}
+div.server-info {
+    border-radius: 10px;
+    margin: 5px;
+}
