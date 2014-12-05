@@ -49,6 +49,7 @@ ServerManager.prototype = (function()
 
 	function getServerHtml(id, serverInfo)
 	{
+		console.log("server id" + id);
 		return Utils.stringFormat(SERVER_HTML_TEMPLATE, [id, serverInfo.hostname, serverInfo.description, serverInfo.port, serverInfo.isOnline() ? SUCCESS : DANGER])
 	}
 
@@ -59,14 +60,30 @@ ServerManager.prototype = (function()
 			$('#servers-board').html(data.reason+'<\\br>'+data.data);
 			return;
 		}
+		var SERVERS_PER_ROW = 4;
 		var serversHtml = '';
+		var tempRowHtml = '';
+		var serversCounter = 0;
 		for(var serverIndex in data.data)
 		{
 			if(data.data.hasOwnProperty(serverIndex))
 			{
-				serversHtml += getServerHtml(serverIndex, data.data[serverIndex]);
+				tempRowHtml += getServerHtml(serverIndex, data.data[serverIndex]);
+				serversCounter += 1;
+				if(serversCounter % SERVERS_PER_ROW === 0)
+				{
+					serversHtml += Utils.stringFormat(ROW_DIV_TEMPLATE, [tempRowHtml]);
+					tempRowHtml = '';
+				}
+				console.log(tempRowHtml);
 			}
 		}
+
+		if(serversCounter % SERVERS_PER_ROW != 0)
+		{
+			serversHtml += Utils.stringFormat(ROW_DIV_TEMPLATE, [tempRowHtml]);
+		}
+		$('#servers-board').empty();
 		$('#servers-board').html(serversHtml);
 	}
 

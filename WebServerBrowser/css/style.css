@@ -2,7 +2,15 @@ div.server-details
 {
     display: none;
 }
-div.server-info {
+div.col-md-3
+{
+    padding: 1px;
+
+}
+.server-info
+{
     border-radius: 10px;
     margin: 5px;
+    padding: 5px;
+    padding-left: 10%;
 }
